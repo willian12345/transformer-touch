@@ -1,0 +1,67 @@
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>createjs-easejs</title>
+    <style>
+    	html,body{
+    		padding: 0;
+    		margin: 0;
+    	}
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/EaselJS/1.0.2/easeljs.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/PreloadJS/1.0.1/preloadjs.min.js"></script>
+	</head>
+	<body onload="init();">
+	  <canvas id="demoCanvas" width="750" height="600"></canvas>
+	  <script>
+		  function init() {
+		  	var canvas = document.getElementById("demoCanvas");
+
+				var designWidth = 750; // 设计宽度为640
+
+				var designHeight = 1136; // 设计高度为1136
+
+				var viewWidth = document.documentElement.clientWidth; // 获取浏览器可视区域宽度
+
+				var viewHeight = document.documentElement.clientHeight; // 获取浏览器可视区域高度
+
+				var scale = viewWidth / designWidth; // 缩放因子
+
+				canvas.width = designWidth;
+
+				canvas.height = viewHeight / scale;
+
+				canvas.style.width = viewWidth + "px";
+
+				canvas.style.height = viewHeight + "px";
+
+		    var stage = new createjs.Stage("demoCanvas");
+		    var circle = new createjs.Shape();
+				circle.graphics.beginFill("red").drawCircle(0, 0, 50);
+				circle.x = 100;
+				circle.y = 100;
+				var cnt = new createjs.Container()
+				cnt.addChild(circle)
+				stage.addChild(cnt);
+				stage.update();
+				console.log(cnt.getBounds())
+				circle.addEventListener("pressup", function(event) { alert("clicked"); })
+
+				function loadImage() {
+	        var preload = new createjs.LoadQueue();
+	        preload.addEventListener("fileload", handleFileComplete);
+	        preload.loadFile("1.png");
+	      }
+
+	      function handleFileComplete(event) {
+	        console.log(event.result)
+	      }
+
+	      loadImage()
+				
+		  }
+		</script>
+	</body>
+</html>
